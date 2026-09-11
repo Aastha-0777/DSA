@@ -1,0 +1,74 @@
+==========================
+DSA PRACTICE TASKS
+==========================
+
+---------------------------------------
+TASK 1 : LINEAR SEARCH
+---------------------------------------
+
+Problem:
+A school stores the roll numbers of 10 students in an array.
+
+Write a program to:
+1. Store the roll numbers in an array.
+2. Ask the user to enter a roll number.
+3. Search the roll number using Linear Search.
+4. If found, display its position.
+5. Otherwise, display "Roll Number Not Found."
+
+Sample Input:
+Roll Numbers:
+101 105 108 110 115 120 125 130 135 140
+
+Enter Roll Number: 125
+
+Sample Output:
+Roll Number Found at Position 7
+
+---------------------------------------
+
+Sample Input:
+Enter Roll Number: 150
+
+Sample Output:
+Roll Number Not Found
+
+---------------------------------------
+Concept Used:
+- Array
+- Loop
+- Linear Search
+
+
+=======================================
+
+---------------------------------------
+TASK 2 : BINARY SEARCH
+---------------------------------------
+
+Problem:
+A company stores employee IDs in sorted order.
+
+Write a program to:
+1. Store the employee IDs in a sorted array.
+2. Ask the user to enter an employee ID.
+3. Search the employee ID using Binary Search.
+4. If found, display its position.
+5. Otherwise, display "Employee ID Not Found."
+
+Employee IDs:
+1001 1005 1010 1015 1020 1025 1030 1035 1040 1045
+
+Sample Input:
+Enter Employee ID: 1030
+
+Sample Output:
+Employee ID Found at Position 7
+
+---------------------------------------
+
+Sample Input:
+Enter Employee ID: 1018
+
+Sample Output:
+Employee ID Not Found
