@@ -37,7 +37,8 @@ void addNode(int value)
 
 } // end of addNode
 
-void display(){
+void display()
+{
 
     struct Node *p;
 
@@ -46,36 +47,100 @@ void display(){
     printf("\nLinked List : ");
     while (p != NULL)
     {
-        
+
         printf(" %d", p->data);
         p = p->next;
-
     }
-    
 
-}//end of display
+} // end of display
 
-void addNodeBeg(int value){
+void addNodeBeg(int value)
+{
 
-    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
 
     temp->data = value;
     temp->next = head;
     head = temp;
 
-}//end of addNodeBeg
+} // end of addNodeBeg
+
+void countOddNode()
+{
+
+    struct Node *t;
+    t = head;
+    int counter = 0;
+
+    while (t != NULL)
+    {
+
+        if (t->data % 2 != 0)
+        {
+
+            counter++;
+        }
+
+        t = t->next;
+
+    } // end of while
+
+    printf("\nNumber of Odd Nodes : %d", counter);
+
+} // end of countOddNode
+
+void searchNode(int data)
+{
+
+    struct Node *t;
+    t = head;
+    int found = 0;
+
+    while (t != NULL)
+    {
+
+        if (t->data == data)
+        {
+
+            found = 1;
+            break;
+        }
+
+        t = t->next;
+    }
+
+    if (found)
+    {
+
+        printf("\nNode Found!!");
+
+    }
+    else
+    {
+
+        printf("\nNode Not Found!!");
+
+    }
+
+} // end of searchNode
 
 int main()
 {
 
     addNode(10);
     addNode(20);
-    addNode(30);
+    addNode(33);
     display();
     addNode(40);
     display();
     addNodeBeg(15);
+    addNodeBeg(67);
     display();
+
+    countOddNode();
+
+    searchNode(67);
+    searchNode(670);
 
     return 0;
 

@@ -35,14 +35,90 @@ void addNode(int value){
 
 }//end of addNode
 
+void disNode(){
+
+    struct Node* dis;
+    dis = head;
+
+    while(dis != NULL){
+
+        printf("%d ", dis->data);
+        dis = dis->next;
+
+    }//end of while
+
+}//end of disNode
+
+void countOddNode(){
+
+    struct Node* p;
+    p = head;
+    int counter = 0;
+
+    while(p != NULL){
+
+        if(p->data % 2 != 0){
+
+            counter++;
+
+        }
+
+        p = p->next;
+
+    }//end of while
+
+    printf("\nNumber of Odd Nodes Present are : %d", counter);
+
+}//end of countOddNode
+
+void searchNode(int data){
+
+    struct Node* t;
+    t = head;
+    int found = 0;
+
+    while (t != NULL)
+    {
+
+        if(t->data == data){
+
+            found = 1;
+            break;
+
+        }
+
+        t = t->next;
+        
+    }
+    
+    if(found){
+
+        printf("\nNode Found!!");
+
+    }else{
+
+        printf("\nNode Not Found!!");
+
+    }
+
+
+}//end of searchNode
+
 int main(){
 
     addNode(10);
     addNode(20);
+    addNode(33);
+    addNode(40);
+    addNode(55);
 
+    disNode();
 
-    printf("%d %d", head->data, last->prev->data);
+    countOddNode();
 
+    searchNode(55);
+    searchNode(550);
+    
     return 0;
 
 }//end of main
