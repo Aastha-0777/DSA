@@ -12,22 +12,20 @@ void insertFirst(int value){
     if(top == SIZE){
 
         printf("\nStack is Full!!");
-        
 
     }else{
 
         top++;
-        for(int i = SIZE - 1; i >= 0; i--){
+        for(int i = top; i > 0; i--){
 
             stack[i] = stack[i - 1];
-
+            
         }//end of for
 
         stack[0] = value;
-       
 
     }//end of if - else
-
+    
 }//end of insertFirst
 
 void insertLast(int value){
@@ -38,16 +36,12 @@ void insertLast(int value){
 
     }else{
 
-        top++;
-        for(int i = SIZE - 1; i <= 0; i++){
+        //insert at SIZE - 1 index
+        
+        stack[top + 1] = value;
 
-            stack[i - 1] = stack[i];
-            
-        }//end of for
 
-        stack[SIZE - 1] = value;
-
-    }//end of if - else
+    }
 
 }
 
@@ -60,9 +54,15 @@ void insertMiddle(int idx, int value){
     }else{
 
         top++;
+        for(int i = top; i > idx; i--){
+
+            stack[i] = stack[i - 1];
+
+        }//end of for
+
         stack[idx] = value;
 
-    }
+    }//end of if - else
 
 }
 
@@ -71,9 +71,9 @@ void display(){
     printf("\nStack Elements : ");
     for(int i = 0; i < SIZE; i++){
 
-        printf("\n| %d |", stack[i]);
+        printf("%d ", stack[i]);
 
-    }
+    }//end of for
 
 }
 
@@ -82,8 +82,9 @@ int main(){
     insertFirst(10);
     insertFirst(20);
     insertLast(90);
-    insertMiddle(5, 67);
+    insertMiddle(5, 67);//inserting 67 at index 5
     insertFirst(70);
+    insertLast(80);
     display();
 
     return 0;
