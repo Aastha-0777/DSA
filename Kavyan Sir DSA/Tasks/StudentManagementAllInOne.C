@@ -138,15 +138,27 @@ void updateStudent(int id)
 {
 
     struct Student *itr = head;
+    int found = 0;
 
     while (itr != NULL)
     {
+        char name[67];
+        int std;
 
         if (itr->id == id)
         {
 
+            found = 1;
             printf("Student Found.. : ");
-            printf("%d %s %d\n", itr->id, itr->name, itr->std);
+            printf("Enter the New Name of the Student : ");
+            scanf("%s", name);
+            printf("Enter the New Std of the Student : ");
+            scanf("%d", std);
+
+            strcpy(itr->name, name);
+            itr->std = std;
+
+            printf("Student's Detail Updated Successfully!!");
             break;
 
         } // end of for
@@ -155,7 +167,122 @@ void updateStudent(int id)
 
     } // end of while
 
+    if(!found){
+
+        printf("Student with Id %d is not in the List!!\n", id);
+
+    }
+
 } // end of updateStudent
+
+void deleteStudent(int id)
+{
+
+    struct Student *itr = head;
+    struct Student *prev;
+    int found = 0;
+
+    while (itr != NULL)
+    {
+
+        prev = itr;
+
+        if (itr->id == id)
+        {
+
+            found = 1;
+            prev->nextStd = itr->nextStd;
+            free(itr);
+            printf("Student Deleted Successfully!!\n");
+            break;
+
+        } // end of for
+
+        itr = itr->nextStd;
+
+    } // end of while
+
+    if(!found){
+
+        printf("Student with Id %d is not in the List!!\n", id);
+
+    }
+
+} // end of updateStudent
+
+void addSutdIdInAdmiQueue(int id){
+
+    if(rear == MAX - 1){
+
+        printf("The Admision Queue is Full!!\n");
+
+    }else{
+
+        rear++;
+        admisionQueue[rear] = id;
+        if(front == -1)
+            front = 0;
+
+    }
+
+}
+
+int findIdxById(int id){
+
+    for (int i = 0; i < MAX; i++)
+    {
+        
+        if(admisionQueue[i] == id){
+
+            return i;
+
+        }
+
+    }
+    
+    return -1;
+
+}
+
+void processAdmision(){
+
+    if(front == -1){
+
+        printf("The Admission Queue is Empty!!\n");
+
+    }else if(front == rear){
+
+        printf("Id %d Proccessed to Addmision..\n", admisionQueue[front]);
+        front = -1;
+        rear = -1;
+        
+    }else{
+
+        printf("Id %d Proccessed to Addmision..\n", admisionQueue[front]);
+        front++;
+
+    }//end of if-else ladder
+
+}//end of processAdmision
+
+void disAdmQueue(){
+
+    if(front == -1){
+
+        printf("The Admission Queue is Empty!!\n");
+
+    }else{
+
+        printf("Admission Queue : \n");
+        for(int i = front; i <= rear; i++){
+
+            printf("%d ", admisionQueue[i]);
+
+        }//end of for
+
+    }
+
+}//end of disAdmQueue
 
 int main()
 {
@@ -196,7 +323,7 @@ int main()
             break;
         case 2:
             disStudent();
-            break;
+            break;  
         case 3:
             int searchId;
             printf("Enter the Id of the Student You Want to Search : ");
@@ -210,10 +337,16 @@ int main()
             updateStudent(updateId);
             break;
         case 5:
-            delStudent();
+            int delId;
+            printf("Enter the Id of the Student You Want to Delete : ");
+            scanf("%d", &delId);
+            delStudent(delId);
             break;
         case 6:
-            addStdToAdmiQueue();
+            int admId;
+            printf("Enter the Id of the Student You Want add into Admision Queue : ");
+            scanf("%d", &admId);
+            addStdToAdmiQueue(admId);
             break;
         case 7:
             processAdmision();
