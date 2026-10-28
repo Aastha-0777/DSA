@@ -84,19 +84,74 @@ void postOrder(struct Node *root)
 void searchNode(struct Node *root, int value)
 {
 
-    if (root != NULL)
+    if (root == NULL)
     {
 
-        if (value < root->data)
-        {
+        printf("Not Found\n");
+    }
+    else if (root->data == value)
+    {
 
-            searchNode(root->left, value);
-        }else if (value > root->data)
-        {
+        printf("Found\n");
+    }
+    else if (value < root->data)
+    {
+        // left
+        searchNode(root->left, value);
+    }
+    else
+    {
+        // right
+        searchNode(root->right, value);
+    }
+}
 
-            searchNode(root->right, value);
+struct Node *deleteNode(struct Node *root, int key)
+{
+
+    if (root == NULL)
+    {
+
+        printf("Not Found\n");
+    }
+    else if (root->data == key)
+    {
+
+        printf("Found\n");
+
+        // delete logic
+
+        if (root->left == NULL && root->right == NULL)
+        {
+            printf("0 Child\n");
+        }
+        else if (root->left != NULL && root->right == NULL)
+        {
+            printf("1 Child -> Left\n");
+        }
+        else if (root->left == NULL && root->right != NULL)
+        {
+            printf("1 Child -> Right\n");
+        }
+        else
+        {
+            printf("2 Child\n");
         }
     }
+    else if (key < root->data)
+    {
+
+        // left
+        root->left = deleteNode(root->left, key);
+    }
+    else
+    {
+
+        // right
+        root->right = deleteNode(root->right, key);
+    }
+
+    return root;
 }
 
 int main()
@@ -114,12 +169,15 @@ int main()
     // printf("%d\n", root->right->data);
     // printf("%d\n", root->right->right->data);
 
-    // inOrder(root);
+    inOrder(root);
+    printf("\n");
     // preOrder(root);
-    postOrder(root);
+    // postOrder(root);
 
     // searchNode(root, 67);
-    searchNode(root, 6);
+    // searchNode(root, 6);
+
+    root = deleteNode(root, 67);
 
     return 0;
 
