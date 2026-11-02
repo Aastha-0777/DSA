@@ -106,6 +106,26 @@ void searchNode(struct Node *root, int value)
     }
 }
 
+struct Node* inOrderSuccessor(struct Node* root){
+
+    if(root != NULL){
+        inOrderSuccessor(root->left);
+    }
+
+    return root;
+
+}
+
+struct Node* inOrderPredecssor(struct Node* root){
+
+    if(root != NULL){
+        inOrderSuccessor(root->right);
+    }
+
+    return root;
+
+}
+
 struct Node *deleteNode(struct Node *root, int key)
 {
 
@@ -124,18 +144,31 @@ struct Node *deleteNode(struct Node *root, int key)
         if (root->left == NULL && root->right == NULL)
         {
             printf("0 Child\n");
+            free(root);
+            return NULL;
         }
         else if (root->left != NULL && root->right == NULL)
         {
             printf("1 Child -> Left\n");
+            struct Node* temp = root->left;
+            free(root);
+            return temp;
         }
         else if (root->left == NULL && root->right != NULL)
         {
             printf("1 Child -> Right\n");
+            struct Node* temp = root->right;
+            free(root);
+            return temp;
         }
         else
         {
             printf("2 Child\n");
+
+            struct Node* smallest = inOrderSuccessor(root->right);
+            root->data = smallest->data;
+            root->right = deleteNode(root->right, smallest->data);
+            return root; 
         }
     }
     else if (key < root->data)
@@ -157,11 +190,12 @@ struct Node *deleteNode(struct Node *root, int key)
 int main()
 {
 
-    root = addNode(root, 67);
-    addNode(root, 70);
-    addNode(root, 80);
-    addNode(root, 50);
+    root = addNode(root, 50);
+    addNode(root, 60);
     addNode(root, 40);
+    addNode(root, 30);
+    addNode(root, 45);
+    addNode(root, 70);
 
     // printf("%d\n", root->left->left->data);
     // printf("%d\n", root->left->data);
@@ -175,9 +209,11 @@ int main()
     // postOrder(root);
 
     // searchNode(root, 67);
-    // searchNode(root, 6);
+    // searchNode(root, 30);
 
-    root = deleteNode(root, 67);
+    root = deleteNode(root, 50);
+    printf("After Deleting => ");
+    inOrder(root);
 
     return 0;
 
