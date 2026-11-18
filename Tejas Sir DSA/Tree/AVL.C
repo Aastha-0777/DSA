@@ -49,6 +49,32 @@ int calculateHeight(struct Node* root){
 
 }
 
+struct Node* leftRotate(struct Node* rootTemp) {
+
+    struct Node* rootRight = rootTemp->right;
+    rootTemp->right = rootRight->left;
+    rootRight->left = rootTemp;
+
+    rootTemp->height = 1 + calculateHeight(rootTemp);
+    rootRight->height = 1 + calculateHeight(rootRight);
+
+    return rootRight;
+
+}//end of leftRotate
+
+struct Node* rightRotate(struct Node* rootTemp) {
+
+    struct Node* rootLeft = rootTemp->left;
+    rootTemp->left = rootLeft->right;
+    rootLeft->right = rootTemp;
+
+    rootTemp->height = 1 + calculateHeight(rootTemp);
+    rootLeft->height = 1 + calculateHeight(rootLeft);
+
+    return rootLeft;
+
+}//end of rightRotate
+
 struct Node *addNode(struct Node *tempRoot, int value)
 {
 
@@ -87,47 +113,63 @@ struct Node *addNode(struct Node *tempRoot, int value)
 
     if(bf > 1){
         printf("Imbalance LEFT %d", tempRoot->data);
+
+        if(tempRoot->left->data < value){
+            printf("- RIGHT %d", tempRoot->data);
+            tempRoot->left = leftRotate(tempRoot->left);
+            return rightRotate(tempRoot);
+        }
+        else
+        {
+            printf(" - LEFT %d", tempRoot->data);
+            return rightRotate(tempRoot);
+        }
+
     }else if(bf < -1){
-        printf("Imbalance RIGHT %d", tempRoot->data);
+        printf("\nImbalance RIGHT - ");
+        if (tempRoot->right->data < value)
+        {
+            printf(" RIGHT : %d", tempRoot->data);
+            return leftRotate(tempRoot);
+        }
+        else
+        {
+
+            printf(" LEFT : %d", tempRoot->data);
+        }
     }
 
     return tempRoot;
 
 } // end of addNode
 
-void inOrder(struct Node *root)
+void inOrder(struct Node *rootTemp)
 {
-
-    if (root != NULL)
+    if (rootTemp != NULL)
     {
-
-        inOrder(root->left);
-        printf(" %d(%d) ", root->data, root->height);
-        inOrder(root->right);
+        inOrder(rootTemp->left);
+        printf(" %d(%d) ", rootTemp->data, rootTemp->height);
+        inOrder(rootTemp->right);
     }
 }
 
-void preOrder(struct Node *root)
+void preOrder(struct Node *rootTemp)
 {
-
-    if (root != NULL)
+    if (rootTemp != NULL)
     {
-
-        printf(" %d ", root->data);
-        preOrder(root->left);
-        preOrder(root->right);
+        printf(" %d ", rootTemp->data);
+        preOrder(rootTemp->left);
+        preOrder(rootTemp->right);
     }
 }
 
-void postOrder(struct Node *root)
+void postOrder(struct Node *rootTemp)
 {
-
-    if (root != NULL)
+    if (rootTemp != NULL)
     {
-
-        postOrder(root->left);
-        postOrder(root->right);
-        printf(" %d ", root->data);
+        postOrder(rootTemp->left);
+        postOrder(rootTemp->right);
+        printf(" %d ", rootTemp->data);
     }
 }
 
@@ -159,17 +201,21 @@ void searchNode(struct Node *root, int value)
 struct Node* inOrderSuccessor(struct Node* root){
 
     if(root != NULL){
-        inOrderSuccessor(root->left);
+        while(root->left != NULL){
+            root = root->left;
+        }
     }
 
     return root;
 
 }
 
-struct Node* inOrderPredecssor(struct Node* root){
+struct Node* inOrderPredecessor(struct Node* root){
 
     if(root != NULL){
-        inOrderSuccessor(root->right);
+        while(root->right != NULL){
+            root = root->right;
+        }
     }
 
     return root;
@@ -218,7 +264,7 @@ struct Node *deleteNode(struct Node *root, int key)
             struct Node* smallest = inOrderSuccessor(root->right);
             root->data = smallest->data;
             root->right = deleteNode(root->right, smallest->data);
-            return root; 
+            return root;
         }
     }
     else if (key < root->data)
@@ -240,13 +286,29 @@ struct Node *deleteNode(struct Node *root, int key)
 int main()
 {
 
-    root = addNode(root, 50);
-    addNode(root, 60);
-    addNode(root, 40);
-    addNode(root, 30);
-    // addNode(root, 45);
-    // addNode(root, 70);
-    
+      // // RR
+    // root = addNode(root, 50); // NULL,50
+    // root = addNode(root, 60); // 50 , 60
+    // root = addNode(root, 70);
+
+    // RL
+    //  root = addNode(root, 50); // NULL,50
+    //  addNode(root, 70);        // 50 , 60
+    //  addNode(root, 60);
+
+    //  LL
+    // root = addNode(root, 50); // NULL,50
+    // addNode(root, 40);        // 50 , 60
+    // addNode(root, 30);
+
+    // LR
+    root = addNode(root, 100); // NULL,50
+    root = addNode(root, 50);  // 50 , 60
+    root = addNode(root, 70);
+
+    // rotation -->
+
+    printf("\nAll data => ");
     inOrder(root);
     printf("\n");
 
