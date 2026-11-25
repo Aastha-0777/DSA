@@ -35,6 +35,12 @@ int main(){
     printf("Enter the Source to check it's Destinations : ");
     scanf("%d", &source);
 
+    for(int i = 0;i < 4; i++){
+        if(graph[source][i]){
+            printf(" %d : %d ", i, source);
+        }
+    }
+
     return 0;
 
 }
